@@ -1,0 +1,60 @@
+body {
+    font-family: "Cairo", sans-serif;
+    background: linear-gradient(to bottom, #e8f1ff, #ffffff);
+    color: #002b5c;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: #003d99;
+    color: white;
+    padding: 15px;
+    font-size: 1.2em;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+.container {
+    padding: 40px 20px;
+}
+
+button, input[type="submit"] {
+    background: #003d99;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover, input[type="submit"]:hover {
+    background: #0055cc;
+}
+
+footer {
+    background: #003d99;
+    color: white;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.file-box {
+    background: #f0f7ff;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px auto;
+    width: 80%;
+}

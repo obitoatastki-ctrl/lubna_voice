@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="container">
+  <h2>لوحة الإدارة</h2>
+  <p>قائمة الملفات المرفوعة:</p>
+  <div class="files-grid">
+    {% for f in files %}
+      <div class="file-card">
+        <p class="fname">{{ f }}</p>
+        <form method="post" action="{{ url_for('admin_delete', filename=f) }}">
+          <button type="submit" class="btn danger">حذف</button>
+        </form>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

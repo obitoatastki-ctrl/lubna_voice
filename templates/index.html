@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero container">
+  <h2>{{ text.title }}</h2>
+  <p class="lead">{{ text.intro }}</p>
+  <div class="hero-actions">
+    <a class="btn" href="{{ url_for('portfolio', lang=lang) }}">{{ text.portfolio }}</a>
+    <a class="btn" href="{{ url_for('request_service', lang=lang) }}">{{ text.request }}</a>
+  </div>
+</section>
+{% endblock %}

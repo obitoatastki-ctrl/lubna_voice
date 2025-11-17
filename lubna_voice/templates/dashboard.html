@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>لوحة الطلبات - Lubna Voice Studio</title>
+    <style>
+        body { background-color: #e8f1fa; color: #003366; font-family: sans-serif; text-align: center; }
+        table { width: 80%; margin: 20px auto; border-collapse: collapse; }
+        th, td { border: 1px solid #003366; padding: 10px; }
+        th { background-color: #cde0f5; }
+    </style>
+</head>
+<body>
+    <h1>لوحة الطلبات</h1>
+    <nav>
+        <a href="/">الرئيسية</a> |
+        <a href="/portfolio">أعمالي</a> |
+        <a href="/request_service">أطلب خدمة</a> |
+        <a href="/contact">اتصل بنا</a> |
+        <a href="/dashboard">الطلبات</a>
+    </nav>
+
+    <table>
+        <tr>
+            <th>الاسم</th>
+            <th>البريد الإلكتروني</th>
+            <th>نوع الخدمة</th>
+            <th>الحالة</th>
+            <th>المصدر</th>
+        </tr>
+        {% for req in requests %}
+        <tr>
+            <td>{{ req.name }}</td>
+            <td>{{ req.email }}</td>
+            <td>{{ req.service_type }}</td>
+            <td>{{ req.status }}</td>
+            <td>{{ req.source }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

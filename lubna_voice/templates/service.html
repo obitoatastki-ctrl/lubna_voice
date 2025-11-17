@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>طلب خدمة - Lubna Voice</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    body {
+      font-family: "Cairo", sans-serif;
+      background: linear-gradient(to bottom, #eaf3fa, #ffffff);
+      color: #0a3d62;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    h2 {
+      background-color: #0a3d62;
+      color: white;
+      padding: 15px;
+      border-radius: 10px;
+      width: 80%;
+      margin: 20px auto;
+    }
+
+    form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 15px;
+      width: 80%;
+      max-width: 400px;
+      margin: 0 auto;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      text-align: right;
+      font-weight: bold;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #0a3d62;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    button:hover {
+      background-color: #07477a;
+    }
+
+    .footer {
+      margin-top: 30px;
+      font-size: 14px;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+  <h2>طلب خدمة من Lubna Voice</h2>
+
+  <form method="POST" action="/service">
+    <label for="fullname">الاسم الكامل</label>
+    <input type="text" id="fullname" name="fullname" required>
+
+    <label for="email">البريد الإلكتروني</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="service">اختر الخدمة المطلوبة</label>
+    <select id="service" name="service" required>
+      <option value="">-- اختر خدمة --</option>
+      <option>دبلجة صوتية</option>
+      <option>مونتاج فيديو</option>
+      <option>تحسين جودة الصوت</option>
+      <option>خدمة خاصة</option>
+    </select>
+
+    <label for="notes">ملاحظات إضافية</label>
+    <textarea id="notes" name="notes" rows="3" placeholder="اكتب تفاصيل الخدمة المطلوبة..."></textarea>
+
+    <button type="submit">تأكيد الطلب والدفع</button>
+  </form>
+
+  <div class="footer">
+    <p>جميع الحقوق محفوظة © Lubna Voice 2025</p>
+  </div>
+</body>
+</html>

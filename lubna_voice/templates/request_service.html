@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>أطلب خدمة - Lubna Voice Studio</title>
+    <style>
+        body { background-color: #e8f1fa; color: #003366; font-family: sans-serif; text-align: center; }
+        nav a { color: #003366; margin: 0 10px; text-decoration: none; font-weight: bold; }
+        form { margin-top: 30px; }
+        input, select, button { padding: 10px; margin: 10px; border-radius: 8px; border: 1px solid #003366; }
+    </style>
+</head>
+<body>
+    <h1>أطلب خدمة</h1>
+    <nav>
+        <a href="/">الرئيسية</a> |
+        <a href="/portfolio">أعمالي</a> |
+        <a href="/request_service">أطلب خدمة</a> |
+        <a href="/contact">اتصل بنا</a> |
+        <a href="/dashboard">الطلبات</a>
+    </nav>
+
+    <p>املأ النموذج أدناه لطلب خدمتك، وسيتم التواصل معك قريبًا.</p>
+
+    <form method="post" action="/request_service">
+        <input type="text" name="name" placeholder="الاسم الكامل" required><br>
+        <input type="email" name="email" placeholder="البريد الإلكتروني" required><br>
+        <select name="service_type" required>
+            <option value="">اختر نوع الخدمة</option>
+            <option>تعليق صوتي</option>
+            <option>مونتاج صوتي</option>
+            <option>مونتاج فيديو</option>
+            <option>إنتاج محتوى سمعي بصري</option>
+        </select><br>
+        <button type="submit">إرسال الطلب</button>
+    </form>
+</body>
+</html>

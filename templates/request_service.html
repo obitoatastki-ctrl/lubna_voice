@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="container">
+  <h2>{{ text.request }}</h2>
+  <form method="POST" class="request-form">
+    <input name="name" placeholder="الاسم الكامل" required>
+    <input type="email" name="email" placeholder="البريد الإلكتروني" required>
+    <input name="service" placeholder="نوع الخدمة المطلوبة (مثلاً: تعليق صوتي)" required>
+    <textarea name="details" placeholder="تفاصيل إضافية"></textarea>
+    <button class="btn" type="submit">إرسال الطلب</button>
+  </form>
+</section>
+{% endblock %}

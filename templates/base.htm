@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title or "Lubna Voice" }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body style="background-color:#f7fbff; color:#003366; font-family: 'Tahoma', sans-serif;">
+
+    <header style="background-color:#005f99; color:white; padding:15px; display:flex; justify-content:space-between; align-items:center;">
+        <div>
+            <h1 style="margin:0; font-size:22px;">🎙️ Lubna Voice Studio</h1>
+        </div>
+        <nav>
+            <a href="{{ url_for('home', lang=lang) }}" style="color:white; margin-right:15px;">{{ texts['home'] }}</a>
+            <a href="{{ url_for('about', lang=lang) }}" style="color:white; margin-right:15px;">{{ texts['about'] }}</a>
+            <a href="{{ url_for('portfolio', lang=lang) }}" style="color:white; margin-right:15px;">{{ texts['portfolio'] }}</a>
+            <a href="{{ url_for('contact', lang=lang) }}" style="color:white;">{{ texts['contact'] }}</a>
+        </nav>
+
+        <!-- لغة الموقع -->
+        <div>
+            <a href="{{ url_for(request.endpoint, **request.view_args, lang='ar') }}" style="color:white; margin-right:10px;">AR</a> |
+            <a href="{{ url_for(request.endpoint, **request.view_args, lang='en') }}" style="color:white; margin-right:10px;">EN</a> |
+            <a href="{{ url_for(request.endpoint, **request.view_args, lang='fr') }}" style="color:white;">FR</a>
+        </div>
+    </header>
+
+    <main style="padding:40px;">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer style="background-color:#005f99; color:white; text-align:center; padding:10px; position:fixed; bottom:0; width:100%;">
+        <p>© 2025 Lubna Voice Studio. جميع الحقوق محفوظة.</p>
+    </footer>
+
+</body>
+</html>

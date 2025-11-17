@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="container">
+  <h2>{{ text.portfolio }}</h2>
+  <p>{{ text.upload_label }}</p>
+
+  <form method="POST" enctype="multipart/form-data" class="upload-form">
+    <input type="file" name="file" required>
+    <input type="submit" value="{{ text.upload_button }}" class="btn">
+  </form>
+
+  <hr>
+
+  <h3>{{ text.portfolio }}</h3>
+  {% if files %}
+    <div class="files-grid">
+      {% for f in files %}
+        <div class="file-card">
+          {% set ext = f.rsplit('.',1)[1].lower() %}
+          {% if ext in ['mp4','mov','avi','mkv','webm','flv'] %}
+            <video controls width="100%">
+              <source src="{{ url_for('static', filename='uploads/' + f) }}">
+            </video>
+          {% else %}
+            <audio controls style="width:100%;">
+              <source src="{{ url_for('static', filename='uploads/' + f) }}">
+            </audio>
+          {% endif %}
+          <p class="fname">{{ f }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>{{ text.no_files }}</p>
+  {% endif %}
+</section>
+{% endblock %}

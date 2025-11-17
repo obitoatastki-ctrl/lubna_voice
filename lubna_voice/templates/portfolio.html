@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>أعمالي - Lubna Voice Studio</title>
+    <style>
+        body { background-color: #e8f1fa; color: #003366; font-family: sans-serif; text-align: center; }
+        nav a { color: #003366; margin: 0 10px; text-decoration: none; font-weight: bold; }
+        .upload-form { margin-top: 30px; }
+        input, button { padding: 10px; margin: 10px; border-radius: 8px; border: 1px solid #003366; }
+    </style>
+</head>
+<body>
+    <h1>أعمالي</h1>
+    <nav>
+        <a href="/">الرئيسية</a> |
+        <a href="/portfolio">أعمالي</a> |
+        <a href="/request_service">أطلب خدمة</a> |
+        <a href="/contact">اتصل بنا</a> |
+        <a href="/dashboard">الطلبات</a>
+    </nav>
+
+    <p>يمكنك هنا رفع أعمالك الصوتية أو المرئية (فيديو أو صوت) من هاتفك مباشرة.</p>
+
+    <form class="upload-form" method="post" enctype="multipart/form-data" action="/portfolio">
+        <input type="file" name="file" accept="video/*,audio/*" required>
+        <button type="submit">رفع الملف</button>
+    </form>
+</body>
+</html>
