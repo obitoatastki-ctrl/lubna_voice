@@ -1,3 +1,4 @@
-cloudinaryFlask
+flask
 gunicorn
 Werkzeug
+cloudinary
