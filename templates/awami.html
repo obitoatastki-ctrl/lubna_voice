@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>صفحة أعمالي - Lubna Voice</title>
+  <style>
+    body { font-family: Arial; background: #f0f4f8; padding: 20px; }
+    h1 { color: #1e3a8a; }
+    #gallery { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 20px; }
+    .video-item { width: 300px; position: relative; }
+    video { width: 100%; height: auto; }
+    .filename { font-size: 0.9em; margin-top: 5px; color: #333; }
+    .delete-btn { position: absolute; top: 5px; right: 5px; background: red; color: white; border: none; padding: 3px 6px; cursor: pointer; font-size: 0.8em; }
+  </style>
+</head>
+<body>
+  <h1>صفحة أعمالي</h1>
+
+  <!-- رفع الملفات -->
+  <input type="file" id="fileUpload" multiple accept="video/*,audio/*">
+  <button onclick="uploadFiles()">رفع الملفات</button>
+
+  <div id="gallery"></div>
+
+  <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
+  <script>
+    const gallery = document.getElementById('gallery');
+    const cloudName = 'YOUR_CLOUD_NAME'; // ضع هنا Cloud Name
+    const uploadPreset = 'lubna_video';   // Upload Preset الخاص بك
+
+    // استرجاع الفيديوهات المحفوظة مسبقًا من Local Storage
+    const savedVideos = JSON.parse(localStorage.getItem('videos')) || [];
+    savedVideos.forEach(v => addVideoToGallery(v.url, v.name, false));
+
+    function uploadFiles() {
+      const files = document.getElementById('fileUpload').files;
+      if (files.length === 0) return alert("اختر ملفات للرفع");
+
+      for (let file of files) {
+        const widget = cloudinary.createUploadWidget({
+          cloudName: cloudName,
+          uploadPreset: uploadPreset,
+          sources: ['local', 'camera'],
+          multiple: false,
+          maxFileSize: 1000000000 // ~1GB
+        }, (error, result) => {
+          if (!error && result && result.event === "success") {
+            addVideoToGallery(result.info.secure_url, file.name, true);
+          }
+        });
+        widget.open();
+      }
+    }
+
+    function addVideoToGallery(url, name, save=true) {
+      const div = document.createElement('div');
+      div.classList.add('video-item');
+      div.innerHTML = `
+        <video controls>
+          <source src="${url}" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <div class="filename">${name}</div>
+        <button class="delete-btn" onclick="deleteVideo(this, '${url}', '${name}')">حذف</button>
+      `;
+      gallery.prepend(div);
+
+      if (save) {
+        savedVideos.push({url, name});
+        localStorage.setItem('videos', JSON.stringify(savedVideos));
+      }
+    }
+
+    function deleteVideo(button, url, name) {
+      button.parentElement.remove();
+      const index = savedVideos.findIndex(v => v.url === url && v.name === name);
+      if (index > -1) {
+        savedVideos.splice(index, 1);
+        localStorage.setItem('videos', JSON.stringify(savedVideos));
+      }
+    }
+  </script>
+</body>
+</html>
