@@ -1,64 +1,37 @@
-from flask import Flask, render_template, request, jsonify
-import sqlite3
+from flask import Flask, render_template, request, redirect, url_for
 import cloudinary
 import cloudinary.uploader
 import os
 
 app = Flask(__name__)
 
-# إعداد Cloudinary
 cloudinary.config(
-  cloud_name='YOUR_CLOUD_NAME',
-  api_key='YOUR_API_KEY',
-  api_secret='YOUR_API_SECRET'
+    cloud_name="dm84rwrrm",
+    api_key="743793366569182",
+    api_secret="Pku2tr25hXEVp_5Gy7Vqm5LX2Pk"
 )
 
-# إنشاء قاعدة البيانات إذا لم تكن موجودة
-conn = sqlite3.connect('videos.db')
-c = conn.cursor()
-c.execute('''CREATE TABLE IF NOT EXISTS videos
-             (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, url TEXT)''')
-conn.commit()
-conn.close()
+videos = []
 
-@app.route('/awami')
+@app.route('/awami', methods=['GET', 'POST'])
 def awami():
-    conn = sqlite3.connect('videos.db')
-    c = conn.cursor()
-    c.execute("SELECT * FROM videos ORDER BY id DESC")
-    videos = c.fetchall()
-    conn.close()
-    return render_template('awami.html', videos=videos, cloud_name='YOUR_CLOUD_NAME', upload_preset='YOUR_UPLOAD_PRESET')
+    if request.method == 'POST':
+        file_to_upload = request.files['file']
+        if file_to_upload:
+            result = cloudinary.uploader.upload(file_to_upload, resource_type="video")
+            videos.append({
+                "public_id": result['public_id'],
+                "url": result['secure_url']
+            })
+        return redirect(url_for('awami'))
+    return render_template('awami.html', videos=videos)
 
-@app.route('/add_video', methods=['POST'])
-def add_video():
-    data = request.get_json()
-    name = data['name']
-    url = data['url']
-    conn = sqlite3.connect('videos.db')
-    c = conn.cursor()
-    c.execute("INSERT INTO videos (name, url) VALUES (?,?)", (name, url))
-    video_id = c.lastrowid
-    conn.commit()
-    conn.close()
-    return jsonify({'id': video_id})
+@app.route('/delete/<public_id>')
+def delete_video(public_id):
+    cloudinary.uploader.destroy(public_id, resource_type="video")
+    global videos
+    videos = [v for v in videos if v['public_id'] != public_id]
+    return redirect(url_for('awami'))
 
-@app.route('/delete', methods=['POST'])
-def delete_video():
-    data = request.get_json()
-    video_id = data['id']
-    conn = sqlite3.connect('videos.db')
-    c = conn.cursor()
-    c.execute("SELECT url FROM videos WHERE id=?", (video_id,))
-    row = c.fetchone()
-    if row:
-        url = row[0]
-        public_id = url.split('/')[-1].split('.')[0]
-        cloudinary.uploader.destroy(public_id, resource_type="video")
-    c.execute("DELETE FROM videos WHERE id=?", (video_id,))
-    conn.commit()
-    conn.close()
-    return jsonify({'status': 'success'})
-
-if __name__ == "__main__":
-    app.run(debug=True)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)), debug=True)
