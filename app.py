@@ -5,20 +5,27 @@ import os
 
 app = Flask(__name__)
 
+# قراءة المفاتيح من Environment Variables في Render
 cloudinary.config(
-    cloud_name="dm84rwrrm",
-    api_key="743793366569182",
-    api_secret="Pku2tr25hXEVp_5Gy7Vqm5LX2Pk"
+    cloud_name=os.environ.get("CLOUD_NAME"),
+    api_key=os.environ.get("API_KEY"),
+    api_secret=os.environ.get("API_SECRET")
 )
 
+# قائمة الفيديوهات الحالية (ستأتي من Cloudinary عند التشغيل لاحقاً)
 videos = []
 
 @app.route('/awami', methods=['GET', 'POST'])
 def awami():
+    global videos
     if request.method == 'POST':
         file_to_upload = request.files['file']
         if file_to_upload:
-            result = cloudinary.uploader.upload(file_to_upload, resource_type="video")
+            result = cloudinary.uploader.upload(
+                file_to_upload, 
+                resource_type="video",
+                folder="lubna_videos"  # تنظيم الملفات في Cloudinary
+            )
             videos.append({
                 "public_id": result['public_id'],
                 "url": result['secure_url']
@@ -28,10 +35,10 @@ def awami():
 
 @app.route('/delete/<public_id>')
 def delete_video(public_id):
-    cloudinary.uploader.destroy(public_id, resource_type="video")
     global videos
+    cloudinary.uploader.destroy(public_id, resource_type="video")
     videos = [v for v in videos if v['public_id'] != public_id]
     return redirect(url_for('awami'))
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)), debug=True)
+    app.run(debug=True)
