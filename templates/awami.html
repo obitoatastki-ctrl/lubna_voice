@@ -1,41 +1,41 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <title>أعمالي - Lubna Voice</title>
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #f7f7f7; padding: 20px; }
-        h1 { color: #2c3e50; text-align: center; }
-        .upload-form { text-align: center; margin-bottom: 30px; }
-        .gallery { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
-        .video-card { background: white; padding: 10px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        video { width: 300px; height: auto; border-radius: 10px; }
-        .delete-btn { display: block; margin-top: 5px; padding: 5px; background: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer; }
-        .delete-btn:hover { background: #c0392b; }
-    </style>
+<meta charset="UTF-8">
+<title>أعمالي - Lubna Voice</title>
+<style>
+video { max-width: 100%; height: auto; margin-bottom: 10px; }
+.video-card { margin-bottom: 20px; border: 1px solid #ccc; padding: 10px; border-radius: 8px; }
+.delete-btn { color: red; text-decoration: none; margin-left: 10px; }
+</style>
 </head>
 <body>
-    <h1>أعمالي</h1>
+<h1>صفحة أعمالي</h1>
 
-    <div class="upload-form">
-        <form method="POST" enctype="multipart/form-data">
-            <input type="file" name="file" accept="video/*,audio/*" required>
-            <button type="submit">رفع الفيديو / المقطع الصوتي</button>
-        </form>
-    </div>
+<form action="/awami" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" accept="video/*,audio/*" required>
+    <button type="submit">رفع الفيديو/الصوت</button>
+</form>
 
-    <div class="gallery">
-        {% for video in videos %}
-        <div class="video-card">
-            <video controls>
-                <source src="{{ video.url }}" type="video/mp4">
-                المتصفح الخاص بك لا يدعم عرض الفيديو.
-            </video>
-            <form action="{{ url_for('delete_video', public_id=video.public_id) }}" method="get">
-                <button type="submit" class="delete-btn">حذف</button>
-            </form>
-        </div>
-        {% endfor %}
-    </div>
+<h2>الفيديوهات والمقاطع الصوتية المرفوعة</h2>
+
+{% if videos %}
+<div>
+{% for video in videos %}
+<div class="video-card">
+    <p>{{ video.filename }}</p>
+    <video controls>
+        <source src="{{ video.url }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <a href="/delete/{{ video.public_id }}" class="delete-btn">حذف</a>
+</div>
+{% endfor %}
+</div>
+{% else %}
+<p>لم يتم رفع أي فيديوهات بعد.</p>
+{% endif %}
+
+<a href="/">الرئيسية</a>
 </body>
 </html>

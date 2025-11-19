@@ -1,11 +1,15 @@
-{% extends "base.html" %}
-{% block content %}
-<section class="hero container">
-  <h2>{{ text.title }}</h2>
-  <p class="lead">{{ text.intro }}</p>
-  <div class="hero-actions">
-    <a class="btn" href="{{ url_for('portfolio', lang=lang) }}">{{ text.portfolio }}</a>
-    <a class="btn" href="{{ url_for('request_service', lang=lang) }}">{{ text.request }}</a>
-  </div>
-</section>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>Lubna Voice - الرئيسية</title>
+</head>
+<body>
+<h1>مرحبا بك في Lubna Voice</h1>
+<nav>
+    <a href="/awami">أعمالي</a> | 
+    <a href="/contact">اتصل بنا</a>
+</nav>
+<p>موقع محترف لعرض الفيديوهات والمقاطع الصوتية.</p>
+</body>
+</html>
